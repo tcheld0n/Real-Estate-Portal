@@ -1,5 +1,3 @@
-import getpass
-
 # Simulação de banco de dados em dicionários
 clientes = {}
 propriedades = {}
@@ -10,7 +8,7 @@ visitas = {}
 def cadastrar_usuario():
     nome = input("Nome: ")
     email = input("Email: ")
-    senha = getpass.getpass("Senha: ")
+    senha = input("Senha: ")
     tipo_usuario = input("Tipo de usuário (comprador/locatario/agente/admin): ")
 
     if email in clientes:
@@ -22,7 +20,7 @@ def cadastrar_usuario():
 
 def login():
     email = input("Email: ")
-    senha = getpass.getpass("Senha: ")
+    senha = input("Senha: ")
 
     if email in clientes and clientes[email]["senha"] == senha:
         print("Login bem-sucedido!")
