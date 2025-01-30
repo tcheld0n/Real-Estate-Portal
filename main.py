@@ -4,7 +4,10 @@ propriedades = {}
 agentes = {}
 visitas = {}
 
-# 1. Autenticação e Perfis de Usuários
+id_propriedade = 1
+id_agente = 1
+id_visita = 1
+
 def cadastrar_usuario():
     nome = input("Nome: ")
     email = input("Email: ")
@@ -29,10 +32,9 @@ def login():
         print("Credenciais inválidas.")
         return None
 
-# 2. Listagem e Gerenciamento de Propriedades
 def cadastrar_propriedade(dono_email):
     global id_propriedade
-    area = input("Tamanho em m^2: ")
+    area = input("Área em m^2: ")
     preco = input("Preço: ")
     localizacao = input("Localização: ")
     
@@ -46,7 +48,15 @@ def cadastrar_propriedade(dono_email):
     print(f"Propriedade cadastrada com sucesso! ID: {id_propriedade}")
     id_propriedade += 1
 
-# 4. Perfis de Agentes Imobiliários
+def buscar_propriedades():
+    if not propriedades:
+        print("Nenhuma propriedade cadastrada ainda.")
+        return
+    
+    print("\n===== Lista de Propriedades Disponíveis =====")
+    for pid, prop in propriedades.items():
+        print(f"ID: {pid}, Área: {prop['area']}m², Preço: {prop['preco']}, Localização: {prop['localizacao']}, Status: {prop['status']}")
+
 def cadastrar_agente():
     global id_agente
     nome = input("Nome do agente: ")
@@ -61,13 +71,25 @@ def cadastrar_agente():
     print(f"Agente {nome} cadastrado com sucesso! ID: {id_agente}")
     id_agente += 1
 
-def buscar_propriedades():
-    return 0
+def agendar_visita(usuario_email):
+    global id_visita
+    buscar_propriedades()
+    prop_id = int(input("Digite o ID da propriedade que deseja visitar: "))
+    
+    if prop_id not in propriedades:
+        print("ID inválido!")
+        return
+    
+    data = input("Digite a data da visita (DD/MM/AAAA): ")
+    
+    visitas[id_visita] = {
+        "usuario": usuario_email,
+        "propriedade": prop_id,
+        "data": data
+    }
+    print(f"Visita agendada com sucesso! ID: {id_visita}")
+    id_visita += 1
 
-def agendar_visita():
-    return 0
-
-# Menu principal
 def menu():
     usuario_logado = None
 
@@ -92,12 +114,15 @@ def menu():
                 cadastrar_propriedade(usuario_logado)
             else:
                 print("Faça login primeiro!")
-        # elif opcao == "4":
-        #     buscar_propriedades()
-        # elif opcao == "5":
-        #     cadastrar_agente()
-        # elif opcao == "6":
-        #     agendar_visita()
+        elif opcao == "4":
+            buscar_propriedades()
+        elif opcao == "5":
+            cadastrar_agente()
+        elif opcao == "6":
+            if usuario_logado:
+                agendar_visita(usuario_logado)
+            else:
+                print("Faça login primeiro!")
         elif opcao == "0":
             print("Saindo...")
             break
