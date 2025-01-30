@@ -34,13 +34,13 @@ def login():
 # 2. Listagem e Gerenciamento de Propriedades
 def cadastrar_propriedade(dono_email):
     global id_propriedade
-    metros = input("Tamanho em m^2: ")
+    area = input("Tamanho em m^2: ")
     preco = input("Preço: ")
     localizacao = input("Localização: ")
     
     propriedades[id_propriedade] = {
         "dono": dono_email,
-        "metros": metros,
+        "area": area,
         "preco": preco,
         "localizacao": localizacao,
         "status": "disponível"
